@@ -1,5 +1,6 @@
 package com.lxk.hw.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.lxk.hw.entity.Sentence;
 import com.lxk.hw.entity.SentenceMongo;
 import com.lxk.hw.service.SentenceMongoService;
@@ -32,14 +33,16 @@ public class SentenceController {
     SentenceMongoService sentenceMongoService;
 
     @RequestMapping("getSentenceList")
-    public List<Sentence> getSentenceList() {
+    public String getSentenceList() {
         List<Sentence> sentenceList = sentenceService.getSentenceList();
-        return sentenceList;
+        String jsonStr = JSON.toJSONString(sentenceList);
+        return  jsonStr;
     }
 
     @RequestMapping("getSentenceMongoList")
-    public List<SentenceMongo> getSentenceMongoList() {
+    public String getSentenceMongoList() {
         List<SentenceMongo> sentenceMongoList = sentenceMongoService.getSentenceMongoList();
-        return sentenceMongoList;
+        String jsonStr = JSON.toJSONString(sentenceMongoList);
+        return sentenceMongoList.toString();
     }
 }

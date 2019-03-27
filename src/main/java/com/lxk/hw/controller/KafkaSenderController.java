@@ -6,7 +6,8 @@ import com.lxk.hw.entity.Message;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -21,8 +22,8 @@ import java.util.UUID;
  * 修改时间：
  * 修改备注：
  **/
-@Component
 @Slf4j
+@RestController
 public class KafkaSenderController {
 
     @Autowired
@@ -33,12 +34,14 @@ public class KafkaSenderController {
     /**
      * 发送消息的方法
      */
-    public void send() {
+    @RequestMapping("/sendKafkaMsg")
+    public String send() {
         Message message = new Message();
         message.setId(System.currentTimeMillis());
         message.setMsg(UUID.randomUUID().toString());
         message.setSendTime(LocalDateTime.now());
         log.info("+++++++++++++++++++++  message = {}", gson.toJson(message));
         kafkaTemplate.send("Y.S.K", gson.toJson(message));
+        return "Kafka , Hello World " + kafkaTemplate.toString();
     }
 }

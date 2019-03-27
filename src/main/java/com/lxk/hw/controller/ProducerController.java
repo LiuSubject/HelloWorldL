@@ -15,9 +15,10 @@ public class ProducerController {
     private JmsMessagingTemplate jmsMessagingTemplate;
 
     @RequestMapping("/sendMsg")
-    public void sendMsg() {
+    public String sendMsg() {
         jmsMessagingTemplate.convertAndSend("my_msg", "Hello World");
         System.out.println("msg发送成功");
+        return "ActiveMQ , Hello World " + jmsMessagingTemplate.toString();
     }
 
     @RequestMapping("/sendMap")
